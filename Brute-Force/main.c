@@ -9,6 +9,9 @@
 #include <unistd.h>//to handle the crypting
 #include <string.h> //to handle the parseing of the file
 #include <time.h>//to get the time in our program
+
+void GeneratePasswords(void);//define our method to create passwords
+
 struct Userinfo {
     char username[100];//the username of the user account
     char encryptedpassword[100];//the encripted password of the user
@@ -17,6 +20,23 @@ struct Userinfo {
     double runtime;//how long it took to find the password in secconds
 };
 int main(int argc, const char * argv[]) {
+    int choice;
+    do{
+        printf("|-----------------------------------------------|\n");
+        printf("|          Welcome To The Decripter             |\n");
+        printf("|   Press 1 To Generate Passwords From Input    |\n");
+        printf("|   Press 2 To Decript Passwords From The File  |\n");
+        printf("|   Press 3 To Exit The Program                 |\n");
+        printf("|-----------------------------------------------|\n");
+        printf("Option: ");
+        scanf("%d",&choice);
+        if(choice==1){
+            GeneratePasswords();//call to our create method
+        }
+        if(choice==3){
+            _Exit(1);//exit 
+        }
+    }while(choice!=2);
     FILE *fp;//our file
     int totalusers = 0;  // the total amount of users in the file
     char filename[] = "cw.dat";
@@ -34,7 +54,7 @@ int main(int argc, const char * argv[]) {
     totalusers = totalusers + 1;//every line of the file we increment a user
     fclose(fp);// Close the file
     char salt[] = "pw";//our "salt" password to use with decripting
-    char testpass[10];//this is the varable that is going to get changed based on the brute force loops
+    char testpass[]="Aaaaaaa1";//this is the varable that is going to get changed based on the brute force loops
     static const char alphupper[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";//our alphabet of uppercase letters
     static const char alphlow[] = "abcdefghijklmnopqrstuvwxyz";//our alphabet of lower letters
     static const char numa[] = "123456789";//our alphabet of numbers
@@ -62,19 +82,21 @@ int main(int argc, const char * argv[]) {
         printf("The File %s Is Corrupt.\nThe program loaded the file but couldnt acess it a seccond time.\n make sure the file isnt corrupt and rerun the program\n", filename);//if the file isnt there we tell the log
         _Exit(1);//exit program
     }
-   int PasswordTriedCounter=0;//the counter for the total amount of passwords tried
+    printf("------------------------------------------------");//make it look nicer
+    int PasswordTriedCounter=0;//the counter for the total amount of passwords tried
     clock_t start = clock();//this is where we start the timer for cracking passwords
         for(int i=0;i<aupperlen;i++){//the first for loop increments the first charactor in the string with an uppercase letter from the aplhabet
             testpass[0]=alphupper[i];//add/change the letter
             for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
                 testpass[1]=alphlow[i];//add/change the letter
                 for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
-                    printf("Currenly Trying Passwqord: [%s], %d Passwords Already Tried]\n",testpass,PasswordTriedCounter);//print the current password we are trying
+                    printf("\nCurrenly Trying Passwqord: [%s], %d Passwords Already Tried]\n",testpass,PasswordTriedCounter);//print the current password we are trying
                     clock_t end = clock();//stop the clock to see the current time
-                    printf("current time Solving %lf\n",(end-start)/(double)CLOCKS_PER_SEC);//print the current time
-                    printf("Trying Passwords......\n");
+                    printf("current time Solving %lf Seconds\n",(end-start)/(double)CLOCKS_PER_SEC);//print the current time
+                    printf("Trying Passwords.");//make it look nicer
                     testpass[2]=alphlow[i];//add/change the letter
                     for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
+                        printf(".");//add a peirod so we can see the progress
                         testpass[3]=alphlow[i];//add/change the letter
                         for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
                             testpass[4]=alphlow[i];//add/change the letter
@@ -95,8 +117,10 @@ int main(int argc, const char * argv[]) {
                                                 Accounts[i].runtime = (end-start)/(double)CLOCKS_PER_SEC;//save the current time it took to the users struct
                                                 Accounts[i].Passwordstried = PasswordTriedCounter;//save the current tries to the users struct
                                                 PasswordsCracked++;//increment the total cracked value
-                                                printf("found password:[%s] for Account %s\n",Accounts[i].decriptedpassword,Accounts[i].username);//tell the user
+                                                printf("\nfound password:[%s] for Account %s\n",Accounts[i].decriptedpassword,Accounts[i].username);//tell the user
                                                 printf("%d/%d Passwords Cracked\n",PasswordsCracked,totalusers);//print how mant we have found and how many we have left
+                                                printf("------------------------------------------------\n");
+                                                printf("Trying Passwords.");//added to make it look nicer
                                             }
                                         }
                                         if(PasswordsCracked==totalusers){//this is the final check to see if we have all the users passwords when all are decripted this wil run and print all the info for the users
@@ -132,4 +156,12 @@ int main(int argc, const char * argv[]) {
         printf("----------------------------------------------------------\n");
     }
     return 0;//if the forloop finnishes "highly unlikely" then exit the program
+}
+void GeneratePasswords(){
+    char password[20];
+    printf("Enter a Password To Encrypt Ex Aaaaaaa1\nPassword: ");
+    scanf("%*c%[^\n]",password);
+    char *currentcheck = crypt(password,"pw");
+    printf("You Encripted Password Is: %s\n\n",currentcheck);
+    return;
 }
