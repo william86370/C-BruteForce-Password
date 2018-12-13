@@ -12,14 +12,10 @@
 
 void GeneratePasswords(){
     char password[20];
-    char salt[3];
     printf("Enter a Password To Encrypt Ex Aaaaa1\nPassword: ");
     scanf("%*c%[^\n]",password);
-    printf("Enter a Salt To Encrypt The Password With Ex pw\nSalt: ");
-    scanf("%2s",salt);
-    
-    printf("encrypting [%s] with salt [%s]",password,salt);
-    char *currentcheck = crypt(password,salt);
+    printf("encrypting [%s]",password);
+    char *currentcheck = crypt(password,"pw");
     printf("You Encripted Password Is: %s\n\n",currentcheck);
     return;
 }
@@ -84,8 +80,8 @@ int main(int argc, const char * argv[]) {
     {
         while (fgets(line, sizeof line, file) != NULL) //this while loop go's through the file line by line
         {
-            sscanf(line,"%80[^:]:%2s:%s",Accounts[LineCounter].username,Accounts[LineCounter].passwordsalt,Accounts[LineCounter].encryptedpassword);//parse the current line for the information on the user
-            printf("found New User [%s:%s] With Salt [%s]\n",Accounts[LineCounter].username,Accounts[LineCounter].encryptedpassword,Accounts[LineCounter].passwordsalt);//print the information that we found in the file
+            sscanf(line,"%80[^:]:%s",Accounts[LineCounter].username,Accounts[LineCounter].encryptedpassword);//parse the current line for the information on the user
+            printf("found New User [%s:%s]\n",Accounts[LineCounter].username,Accounts[LineCounter].encryptedpassword);//print the information that we found in the file
             LineCounter++;//increment the counter for the line
         }
         fclose(file);//close the file
@@ -119,8 +115,8 @@ int main(int argc, const char * argv[]) {
                             //everytime we loop through we take the decripted value we have currently from the for loops
                             //we encript it to check of the encripted password is the same as the one we have from the file
                             //if the values match then we save that password, time, and amount of tries to the structure value for that user
+                            char *currentcheck = crypt(testpass,"pw");//encript the current string
                             for(int i=0;i<totalusers;i++){//run through the structure of users
-                                char *currentcheck = crypt(testpass, Accounts[LineCounter].encryptedpassword);//encript the current string
                                 if(strcmp(Accounts[i].encryptedpassword,currentcheck) == 0){//check for each user if the values match
                                     sprintf(Accounts[i].decriptedpassword,"%s",testpass);//if the values match we add the decripted value to the structure
                                     clock_t end = clock();//stop the clock for time
@@ -134,7 +130,7 @@ int main(int argc, const char * argv[]) {
                                 }
                             }
                             if(PasswordsCracked==totalusers){//this is the final check to see if we have all the users passwords when all are decripted this wil run and print all the info for the users
-                                printf("----------------------------------------------------------\n");
+                                printf("\n----------------------------------------------------------\n");
                                 printf("All Passwords have been Cracked\n");
                                 for(int i=0;i<totalusers;i++){//run throught all the users in the structure
                                     printf("User %d.) Username: %s Password: %s\n",i+1,Accounts[i].username,Accounts[i].decriptedpassword);//print the username and password to the log
