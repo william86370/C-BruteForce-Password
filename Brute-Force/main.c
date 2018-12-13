@@ -10,18 +10,32 @@
 #include <string.h> //to handle the parseing of the file
 #include <time.h>//to get the time in our program
 
-void GeneratePasswords(){
-    char password[20];
-    printf("Enter a Password To Encrypt Ex Aaaaa1\nPassword: ");
-    scanf("%*c%[^\n]",password);
-    printf("encrypting [%s]",password);
-    char *currentcheck = crypt(password,"pw");
-    printf("You Encripted Password Is: %s\n\n",currentcheck);
-    return;
+void GeneratePasswords(){//this function allows the user to create encripted passwords
+    char password[20];//this is where the user defined password is stored
+    printf("Enter a Password To Encrypt Ex Aaaaa1\nPassword: ");//tell the user
+    scanf("%*c%[^\n]",password);//look for use inout
+    printf("encrypting [%s]",password);//tell user
+    char *currentcheck = crypt(password,"pw");//this is where we encrpyt the users password
+    printf("You Encripted Password Is: %s\n\n",currentcheck);//tell the user
+    printf("Would You Like To Add this Password to the File\n1 Yes, 2 No\nChoice: ");//inform
+    int choice=0;//this is the menu deffanation
+    scanf("%d",&choice);//scan for use inout
+    char username[100];//this is where we will store the user entered username
+    if(choice==1){//if the user tells the program to store the password in the file it will run this
+        printf("Enter a Username for the password you encrypted\nUsername: ");
+        scanf("%s",username);
+        FILE *fp;//create the file
+         char filename[] = "cw.dat";//set the filename
+        fp = fopen(filename, "a");//open the file
+        fprintf(fp, "%s:%s\n",username,currentcheck);//prin the usename and pasdsword to the file
+        printf("User [%s:%s] Added to File %s]\n",username,currentcheck,filename);//inform the user
+        fclose(fp);//close the file
+    }
+    return;//return to the main menu
 }
 
 struct Userinfo {
-    char passwordsalt[3];
+    char passwordsalt[3];//added for a later adation of custom salts
     char username[100];//the username of the user account
     char encryptedpassword[100];//the encripted password of the user
     char decriptedpassword[100];//the decripted password of the user
@@ -92,20 +106,19 @@ int main(int argc, const char * argv[]) {
         _Exit(1);//exit program
     }
     printf("------------------------------------------------");//make it look nicer
-    
     int PasswordTriedCounter=0;//the counter for the total amount of passwords tried
     clock_t start = clock();//this is where we start the timer for cracking passwords
     for(int i=0;i<aupperlen;i++){//the first for loop increments the first charactor in the string with an uppercase letter from the aplhabet
         testpass[0]=alphupper[i];//add/change the letter
+        printf("\nCurrenly Trying Passwqord: [%s], %d Passwords Already Tried]\n",testpass,PasswordTriedCounter);//print the current password we are trying
+        clock_t end = clock();//stop the clock to see the current time
+        printf("current time Solving %lf Seconds\n",(end-start)/(double)CLOCKS_PER_SEC);//print the current time
+        printf("Trying Passwords.");//make it look nicer
         for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
             testpass[1]=alphlow[i];//add/change the letter
-            printf("\nCurrenly Trying Passwqord: [%s], %d Passwords Already Tried]\n",testpass,PasswordTriedCounter);//print the current password we are trying
-            clock_t end = clock();//stop the clock to see the current time
-            printf("current time Solving %lf Seconds\n",(end-start)/(double)CLOCKS_PER_SEC);//print the current time
-            printf("Trying Passwords.");//make it look nicer
+            printf(".");//add a peirod so we can see the progress
             for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
                 testpass[2]=alphlow[i];//add/change the letter
-                printf(".");//add a peirod so we can see the progress
                 for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
                     testpass[3]=alphlow[i];//add/change the letter
                     for(int i=0;i<alowerlen;i++){//this adds/changes the lowercase value of the string at index[i]
