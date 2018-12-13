@@ -1,6 +1,6 @@
 //
-//  main.c
-//  Bruteforce
+//  Bruteforce.c
+//  150-Final-Project
 //
 //  Created by Wilson Brown on 11/28/18.
 //  received help from William Wright
@@ -25,7 +25,7 @@ void GeneratePasswords(){//this function allows the user to create encripted pas
         printf("Enter a Username for the password you encrypted\nUsername: ");
         scanf("%s",username);
         FILE *fp;//create the file
-         char filename[] = "cw.dat";//set the filename
+        char filename[] = "cw2.dat";//set the filename
         fp = fopen(filename, "a");//open the file
         fprintf(fp, "%s:%s\n",username,currentcheck);//prin the usename and pasdsword to the file
         printf("User [%s:%s] Added to File %s]\n",username,currentcheck,filename);//inform the user
@@ -62,7 +62,7 @@ int main(int argc, const char * argv[]) {
     }while(choice!=2);
     FILE *fp;//our file
     int totalusers = 0;  // the total amount of users in the file
-    char filename[] = "cw.dat";
+    char filename[] = "cw2.dat";
     char c;  // To store a character read from file
     // Open the file
     fp = fopen(filename, "r");
@@ -110,7 +110,7 @@ int main(int argc, const char * argv[]) {
     clock_t start = clock();//this is where we start the timer for cracking passwords
     for(int i=0;i<aupperlen;i++){//the first for loop increments the first charactor in the string with an uppercase letter from the aplhabet
         testpass[0]=alphupper[i];//add/change the letter
-        printf("\nCurrenly Trying Passwqord: [%s], %d Passwords Already Tried]\n",testpass,PasswordTriedCounter);//print the current password we are trying
+        printf("\ncurrently Trying Password: [%s], %d Passwords Already Tried]\n",testpass,PasswordTriedCounter);//print the current password we are trying
         clock_t end = clock();//stop the clock to see the current time
         printf("current time Solving %lf Seconds\n",(end-start)/(double)CLOCKS_PER_SEC);//print the current time
         printf("Trying Passwords.");//make it look nicer

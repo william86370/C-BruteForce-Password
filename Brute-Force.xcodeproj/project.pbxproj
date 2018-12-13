@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		101B631621B031C700071C3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 101B631521B031C700071C3F /* main.c */; };
+		101B631621B031C700071C3F /* Bruteforce.c in Sources */ = {isa = PBXBuildFile; fileRef = 101B631521B031C700071C3F /* Bruteforce.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		101B631221B031C700071C3F /* Brute-Force */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Brute-Force"; sourceTree = BUILT_PRODUCTS_DIR; };
-		101B631521B031C700071C3F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		101B631521B031C700071C3F /* Bruteforce.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bruteforce.c; sourceTree = "<group>"; };
 		101B631C21B0406800071C3F /* cw.dat */ = {isa = PBXFileReference; lastKnownFileType = text; path = cw.dat; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,7 +58,7 @@
 		101B631421B031C700071C3F /* Brute-Force */ = {
 			isa = PBXGroup;
 			children = (
-				101B631521B031C700071C3F /* main.c */,
+				101B631521B031C700071C3F /* Bruteforce.c */,
 				101B631C21B0406800071C3F /* cw.dat */,
 			);
 			path = "Brute-Force";
@@ -120,7 +120,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				101B631621B031C700071C3F /* main.c in Sources */,
+				101B631621B031C700071C3F /* Bruteforce.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +243,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2U2K8SJ7Q7;
-				OTHER_CFLAGS = "-lcrypt";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -253,7 +253,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2U2K8SJ7Q7;
-				OTHER_CFLAGS = "-lcrypt";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
